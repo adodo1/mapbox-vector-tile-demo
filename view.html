@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>GeoJSON tutorial - Leaflet</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+	<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+
+	<style>
+		#map {
+			width: 800px;
+			height: 600px;
+		}
+	</style>
+
+	
+</head>
+<body>
+
+<div id='map'></div>
+
+
+<script>
+	var map = L.map('map').setView([39.74739, -105], 3);
+
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		id: 'mapbox.light'
+	}).addTo(map);
+
+	function onEachFeature(feature, layer) {
+		// does this feature have a property named popupContent?
+		
+	}
+
+	$.getJSON('data.json' + "?" + Math.random(), function (states) {
+		var coorsLayer = L.geoJSON(states, {
+			onEachFeature: onEachFeature,
+			style: function (feature) {
+				if (feature.properties.lyr=='water_polygon') return { color: 'transparent', fillColor: '#0000FF' };
+            }
+		}).addTo(map);
+	});
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
